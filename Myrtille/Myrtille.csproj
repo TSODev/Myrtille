@@ -160,6 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon\Suite.ico" />
+    <None Include="Resources\loaddays.png" />
+    <None Include="Resources\loadpeople.png" />
     <None Include="Resources\WaitingLightDayOff.png" />
     <None Include="Resources\WaitingLightPeople.png" />
     <None Include="Resources\OpenInvokeTable.png" />
