@@ -129,7 +129,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="UtilsAsync.cs" />
+    <Compile Include="UtilsDate.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,13 +161,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon\Suite.ico" />
+    <None Include="Resources\Refresh.png" />
+    <None Include="Resources\yellow3d.png" />
+    <None Include="Resources\red3d.png" />
+    <None Include="Resources\orange3d.png" />
+    <None Include="Resources\green3D.png" />
+    <None Include="Resources\blue3d.png" />
     <None Include="Resources\loaddays.png" />
     <None Include="Resources\loadpeople.png" />
     <None Include="Resources\WaitingLightDayOff.png" />
     <None Include="Resources\WaitingLightPeople.png" />
     <None Include="Resources\OpenInvokeTable.png" />
     <None Include="Resources\OpenFile.png" />
-    <None Include="Resources\Refresh.png" />
     <None Include="Resources\WaitingLightwithText.png" />
     <None Include="Resources\Wait.bmp" />
   </ItemGroup>

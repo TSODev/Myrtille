@@ -63,6 +63,26 @@ namespace Myrtille.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap blue3d {
+            get {
+                object obj = ResourceManager.GetObject("blue3d", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap green3D {
+            get {
+                object obj = ResourceManager.GetObject("green3D", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap loaddays {
             get {
                 object obj = ResourceManager.GetObject("loaddays", resourceCulture);
@@ -103,6 +123,26 @@ namespace Myrtille.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap orange3d {
+            get {
+                object obj = ResourceManager.GetObject("orange3d", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap red3d {
+            get {
+                object obj = ResourceManager.GetObject("red3d", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Refresh {
             get {
                 object obj = ResourceManager.GetObject("Refresh", resourceCulture);
@@ -136,6 +176,16 @@ namespace Myrtille.Properties {
         internal static System.Drawing.Bitmap WaitingLightwithText {
             get {
                 object obj = ResourceManager.GetObject("WaitingLightwithText", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yellow3d {
+            get {
+                object obj = ResourceManager.GetObject("yellow3d", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

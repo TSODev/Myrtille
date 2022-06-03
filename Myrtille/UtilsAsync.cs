@@ -7,7 +7,7 @@ using System;
 namespace Myrtille
 {
 
-    public class Utils
+    public class UtilsAsync
     {
         async Task<List<byte>> ReadByteArrayAsync(string filePath)
         {
@@ -43,12 +43,6 @@ namespace Myrtille
             stream = null;
 
             return excelPackage;
-        }
-
-        public bool isBeetween(DateTime d, DateTime min, DateTime max)
-        {
-
-            return true;
         }
 
     }

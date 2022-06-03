@@ -28,14 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ribbonControlAdv2 = new Syncfusion.Windows.Forms.Tools.RibbonControlAdv();
             this.toolStripTabItemFichiers = new Syncfusion.Windows.Forms.Tools.ToolStripTabItem();
             this.toolStripExFiles = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
+            this.toolStripBtnEffectif = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnAbsences = new System.Windows.Forms.ToolStripButton();
+            this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
+            this.toolStripBtnRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripTabItemAnalyse = new Syncfusion.Windows.Forms.Tools.ToolStripTabItem();
             this.openFileDialogEffectif = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogAbsences = new System.Windows.Forms.OpenFileDialog();
             this.splitContainerAdv2 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
+            this.integerTBRecords = new Syncfusion.Windows.Forms.Tools.IntegerTextBox();
             this.aLType = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.aLStop = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.aLStart = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -44,24 +50,27 @@
             this.sfDateTimeStart = new Syncfusion.WinForms.Input.SfDateTimeEdit();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPageAdvResults = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.panelWaitForResults = new System.Windows.Forms.Panel();
             this.sfDataGridResult = new Syncfusion.WinForms.DataGrid.SfDataGrid();
             this.tabPageAdvPeople = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.panelWaitForPeople = new System.Windows.Forms.Panel();
             this.sfDataGridEffectif = new Syncfusion.WinForms.DataGrid.SfDataGrid();
             this.tabPageAdvDayOffs = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.sfDataGridAbsences = new Syncfusion.WinForms.DataGrid.SfDataGrid();
-            this.panelWaitForResults = new System.Windows.Forms.Panel();
-            this.panelWaitForPeople = new System.Windows.Forms.Panel();
             this.panelWaitForDayOff = new System.Windows.Forms.Panel();
-            this.toolStripBtnEffectif = new System.Windows.Forms.ToolStripButton();
-            this.toolStripBtnAbsences = new System.Windows.Forms.ToolStripButton();
+            this.sfDataGridAbsences = new Syncfusion.WinForms.DataGrid.SfDataGrid();
+            this.imageListTriColor = new System.Windows.Forms.ImageList(this.components);
+            this.backgroundWorkerAllRows = new System.ComponentModel.BackgroundWorker();
+            this.progressBarAdvAnalyse = new Syncfusion.Windows.Forms.Tools.ProgressBarAdv();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControlAdv2)).BeginInit();
             this.ribbonControlAdv2.SuspendLayout();
             this.toolStripTabItemFichiers.Panel.SuspendLayout();
             this.toolStripExFiles.SuspendLayout();
+            this.toolStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerAdv2)).BeginInit();
             this.splitContainerAdv2.Panel1.SuspendLayout();
             this.splitContainerAdv2.Panel2.SuspendLayout();
             this.splitContainerAdv2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.integerTBRecords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboDropDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
@@ -71,6 +80,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.sfDataGridEffectif)).BeginInit();
             this.tabPageAdvDayOffs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sfDataGridAbsences)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBarAdvAnalyse)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControlAdv2
@@ -102,7 +112,7 @@
             this.ribbonControlAdv2.SelectedTab = this.toolStripTabItemFichiers;
             this.ribbonControlAdv2.ShowQuickItemsDropDownButton = false;
             this.ribbonControlAdv2.ShowRibbonDisplayOptionButton = false;
-            this.ribbonControlAdv2.Size = new System.Drawing.Size(2310, 244);
+            this.ribbonControlAdv2.Size = new System.Drawing.Size(2450, 244);
             this.ribbonControlAdv2.SystemText.QuickAccessDialogDropDownName = "Start menu";
             this.ribbonControlAdv2.SystemText.RenameDisplayLabelText = "&Display Name:";
             this.ribbonControlAdv2.TabIndex = 1;
@@ -118,6 +128,7 @@
             // ribbonControlAdv2.ribbonPanel1
             // 
             this.toolStripTabItemFichiers.Panel.Controls.Add(this.toolStripExFiles);
+            this.toolStripTabItemFichiers.Panel.Controls.Add(this.toolStripEx1);
             this.toolStripTabItemFichiers.Panel.Name = "ribbonPanel1";
             this.toolStripTabItemFichiers.Panel.ScrollPosition = 0;
             this.toolStripTabItemFichiers.Panel.ShowCaption = false;
@@ -147,6 +158,52 @@
             this.toolStripExFiles.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.toolStripExFiles.Size = new System.Drawing.Size(200, 143);
             this.toolStripExFiles.TabIndex = 0;
+            // 
+            // toolStripBtnEffectif
+            // 
+            this.toolStripBtnEffectif.Image = global::Myrtille.Properties.Resources.loadpeople;
+            this.toolStripBtnEffectif.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnEffectif.Name = "toolStripBtnEffectif";
+            this.toolStripBtnEffectif.Size = new System.Drawing.Size(83, 137);
+            this.toolStripBtnEffectif.Text = "Effectif";
+            this.toolStripBtnEffectif.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnEffectif.Click += new System.EventHandler(this.toolStripBtnEffectif_Click);
+            // 
+            // toolStripBtnAbsences
+            // 
+            this.toolStripBtnAbsences.Image = global::Myrtille.Properties.Resources.loaddays;
+            this.toolStripBtnAbsences.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnAbsences.Name = "toolStripBtnAbsences";
+            this.toolStripBtnAbsences.Size = new System.Drawing.Size(108, 137);
+            this.toolStripBtnAbsences.Text = "Absences";
+            this.toolStripBtnAbsences.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnAbsences.Click += new System.EventHandler(this.toolStripBtnAbsences_ClickAsync);
+            // 
+            // toolStripEx1
+            // 
+            this.toolStripEx1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripEx1.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.toolStripEx1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripEx1.Image = null;
+            this.toolStripEx1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripBtnRefresh});
+            this.toolStripEx1.Location = new System.Drawing.Point(202, 1);
+            this.toolStripEx1.Name = "toolStripEx1";
+            this.toolStripEx1.Office12Mode = false;
+            this.toolStripEx1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripEx1.Size = new System.Drawing.Size(129, 143);
+            this.toolStripEx1.TabIndex = 1;
+            // 
+            // toolStripBtnRefresh
+            // 
+            this.toolStripBtnRefresh.Image = global::Myrtille.Properties.Resources.Refresh;
+            this.toolStripBtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnRefresh.Name = "toolStripBtnRefresh";
+            this.toolStripBtnRefresh.Size = new System.Drawing.Size(121, 137);
+            this.toolStripBtnRefresh.Text = "Refresh";
+            this.toolStripBtnRefresh.Click += new System.EventHandler(this.toolStripBtnRefresh_Click);
             // 
             // toolStripTabItemAnalyse
             // 
@@ -186,6 +243,8 @@
             // 
             // splitContainerAdv2.Panel1
             // 
+            this.splitContainerAdv2.Panel1.Controls.Add(this.progressBarAdvAnalyse);
+            this.splitContainerAdv2.Panel1.Controls.Add(this.integerTBRecords);
             this.splitContainerAdv2.Panel1.Controls.Add(this.aLType);
             this.splitContainerAdv2.Panel1.Controls.Add(this.aLStop);
             this.splitContainerAdv2.Panel1.Controls.Add(this.aLStart);
@@ -198,11 +257,21 @@
             // 
             this.splitContainerAdv2.Panel2.Controls.Add(this.tabControlAdv1);
             this.splitContainerAdv2.Panel2MinSize = 800;
-            this.splitContainerAdv2.Size = new System.Drawing.Size(2310, 1089);
-            this.splitContainerAdv2.SplitterDistance = 312;
+            this.splitContainerAdv2.Size = new System.Drawing.Size(2450, 1537);
+            this.splitContainerAdv2.SplitterDistance = 328;
             this.splitContainerAdv2.TabIndex = 2;
             this.splitContainerAdv2.Text = "splitContainerAdv2";
             this.splitContainerAdv2.ThemeName = "None";
+            // 
+            // integerTBRecords
+            // 
+            this.integerTBRecords.BeforeTouchSize = new System.Drawing.Size(63, 31);
+            this.integerTBRecords.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.integerTBRecords.IntegerValue = ((long)(0));
+            this.integerTBRecords.Location = new System.Drawing.Point(0, 1343);
+            this.integerTBRecords.Name = "integerTBRecords";
+            this.integerTBRecords.Size = new System.Drawing.Size(63, 31);
+            this.integerTBRecords.TabIndex = 6;
             // 
             // aLType
             // 
@@ -211,6 +280,7 @@
             this.aLType.Size = new System.Drawing.Size(164, 25);
             this.aLType.TabIndex = 5;
             this.aLType.Text = "Type d\'absence";
+            this.aLType.Visible = false;
             // 
             // aLStop
             // 
@@ -238,37 +308,42 @@
             this.comboDropDown1.Size = new System.Drawing.Size(356, 31);
             this.comboDropDown1.Style = Syncfusion.Windows.Forms.VisualStyle.Office2016Colorful;
             this.comboDropDown1.TabIndex = 2;
+            this.comboDropDown1.Visible = false;
             // 
             // sfDateTimeStop
             // 
+            this.sfDateTimeStop.Enabled = false;
             this.sfDateTimeStop.Location = new System.Drawing.Point(65, 194);
             this.sfDateTimeStop.Name = "sfDateTimeStop";
             this.sfDateTimeStop.Size = new System.Drawing.Size(356, 44);
             this.sfDateTimeStop.TabIndex = 1;
-            this.sfDateTimeStop.ValueChanged += new Syncfusion.WinForms.Input.Events.DateTimeValueChangedEventHandler(this.onStopDateChanged);
+            this.sfDateTimeStop.ValueChanged += new Syncfusion.WinForms.Input.Events.DateTimeValueChangedEventHandler(this.onStopDateChangedAsync);
             // 
             // sfDateTimeStart
             // 
+            this.sfDateTimeStart.Enabled = false;
             this.sfDateTimeStart.Location = new System.Drawing.Point(65, 92);
             this.sfDateTimeStart.Name = "sfDateTimeStart";
             this.sfDateTimeStart.Size = new System.Drawing.Size(356, 44);
             this.sfDateTimeStart.TabIndex = 0;
-            this.sfDateTimeStart.ValueChanged += new Syncfusion.WinForms.Input.Events.DateTimeValueChangedEventHandler(this.onStartDateChanged);
+            this.sfDateTimeStart.ValueChanged += new Syncfusion.WinForms.Input.Events.DateTimeValueChangedEventHandler(this.onStartDateChangedAsync);
             // 
             // tabControlAdv1
             // 
-            this.tabControlAdv1.ActiveTabFont = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlAdv1.ActiveTabFont = new System.Drawing.Font("Microsoft Sans Serif", 10.125F);
             this.tabControlAdv1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(1991, 1089);
+            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(2115, 1537);
             this.tabControlAdv1.Controls.Add(this.tabPageAdvResults);
             this.tabControlAdv1.Controls.Add(this.tabPageAdvPeople);
             this.tabControlAdv1.Controls.Add(this.tabPageAdvDayOffs);
             this.tabControlAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlAdv1.FocusOnTabClick = false;
             this.tabControlAdv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlAdv1.ImageList = this.imageListTriColor;
+            this.tabControlAdv1.ImageOffset = 2;
             this.tabControlAdv1.Location = new System.Drawing.Point(0, 0);
             this.tabControlAdv1.Name = "tabControlAdv1";
-            this.tabControlAdv1.Size = new System.Drawing.Size(1991, 1089);
+            this.tabControlAdv1.Size = new System.Drawing.Size(2115, 1537);
             this.tabControlAdv1.TabIndex = 0;
             this.tabControlAdv1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererOffice2016Colorful);
             this.tabControlAdv1.ThemeName = "TabRendererOffice2016Colorful";
@@ -281,14 +356,25 @@
             this.tabPageAdvResults.Controls.Add(this.sfDataGridResult);
             this.tabPageAdvResults.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.tabPageAdvResults.Image = null;
+            this.tabPageAdvResults.ImageIndex = 2;
             this.tabPageAdvResults.ImageSize = new System.Drawing.Size(32, 32);
             this.tabPageAdvResults.Location = new System.Drawing.Point(45, 1);
             this.tabPageAdvResults.Name = "tabPageAdvResults";
             this.tabPageAdvResults.ShowCloseButton = true;
-            this.tabPageAdvResults.Size = new System.Drawing.Size(1944, 1086);
+            this.tabPageAdvResults.Size = new System.Drawing.Size(2068, 1534);
             this.tabPageAdvResults.TabIndex = 1;
             this.tabPageAdvResults.Text = "Résultats";
             this.tabPageAdvResults.ThemesEnabled = false;
+            // 
+            // panelWaitForResults
+            // 
+            this.panelWaitForResults.BackgroundImage = global::Myrtille.Properties.Resources.WaitingLightwithText;
+            this.panelWaitForResults.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panelWaitForResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelWaitForResults.Location = new System.Drawing.Point(0, 0);
+            this.panelWaitForResults.Name = "panelWaitForResults";
+            this.panelWaitForResults.Size = new System.Drawing.Size(2068, 1534);
+            this.panelWaitForResults.TabIndex = 1;
             // 
             // sfDataGridResult
             // 
@@ -300,7 +386,7 @@
             this.sfDataGridResult.Name = "sfDataGridResult";
             this.sfDataGridResult.PreviewRowHeight = 56;
             this.sfDataGridResult.SerializationController = null;
-            this.sfDataGridResult.Size = new System.Drawing.Size(1944, 1086);
+            this.sfDataGridResult.Size = new System.Drawing.Size(2068, 1534);
             this.sfDataGridResult.TabIndex = 0;
             this.sfDataGridResult.AutoGeneratingColumn += new Syncfusion.WinForms.DataGrid.Events.AutoGeneratingColumnEventHandler(this.sfDataGridEffectif_AutoGeneratingColumn);
             // 
@@ -311,14 +397,25 @@
             this.tabPageAdvPeople.Controls.Add(this.sfDataGridEffectif);
             this.tabPageAdvPeople.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.tabPageAdvPeople.Image = null;
+            this.tabPageAdvPeople.ImageIndex = 2;
             this.tabPageAdvPeople.ImageSize = new System.Drawing.Size(32, 32);
             this.tabPageAdvPeople.Location = new System.Drawing.Point(45, 1);
             this.tabPageAdvPeople.Name = "tabPageAdvPeople";
             this.tabPageAdvPeople.ShowCloseButton = true;
-            this.tabPageAdvPeople.Size = new System.Drawing.Size(1944, 1086);
+            this.tabPageAdvPeople.Size = new System.Drawing.Size(2068, 1534);
             this.tabPageAdvPeople.TabIndex = 2;
             this.tabPageAdvPeople.Text = "Effectifs";
             this.tabPageAdvPeople.ThemesEnabled = false;
+            // 
+            // panelWaitForPeople
+            // 
+            this.panelWaitForPeople.BackgroundImage = global::Myrtille.Properties.Resources.WaitingLightPeople;
+            this.panelWaitForPeople.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panelWaitForPeople.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelWaitForPeople.Location = new System.Drawing.Point(0, 0);
+            this.panelWaitForPeople.Name = "panelWaitForPeople";
+            this.panelWaitForPeople.Size = new System.Drawing.Size(2068, 1534);
+            this.panelWaitForPeople.TabIndex = 1;
             // 
             // sfDataGridEffectif
             // 
@@ -329,7 +426,7 @@
             this.sfDataGridEffectif.Location = new System.Drawing.Point(0, 0);
             this.sfDataGridEffectif.Name = "sfDataGridEffectif";
             this.sfDataGridEffectif.PreviewRowHeight = 56;
-            this.sfDataGridEffectif.Size = new System.Drawing.Size(1944, 1086);
+            this.sfDataGridEffectif.Size = new System.Drawing.Size(2068, 1534);
             this.sfDataGridEffectif.TabIndex = 0;
             this.sfDataGridEffectif.Text = "sfDataGrid1";
             this.sfDataGridEffectif.AutoGeneratingColumn += new Syncfusion.WinForms.DataGrid.Events.AutoGeneratingColumnEventHandler(this.sfDataGridEffectif_AutoGeneratingColumn);
@@ -341,14 +438,25 @@
             this.tabPageAdvDayOffs.Controls.Add(this.sfDataGridAbsences);
             this.tabPageAdvDayOffs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.tabPageAdvDayOffs.Image = null;
+            this.tabPageAdvDayOffs.ImageIndex = 2;
             this.tabPageAdvDayOffs.ImageSize = new System.Drawing.Size(32, 32);
             this.tabPageAdvDayOffs.Location = new System.Drawing.Point(45, 1);
             this.tabPageAdvDayOffs.Name = "tabPageAdvDayOffs";
             this.tabPageAdvDayOffs.ShowCloseButton = true;
-            this.tabPageAdvDayOffs.Size = new System.Drawing.Size(1944, 1086);
+            this.tabPageAdvDayOffs.Size = new System.Drawing.Size(2068, 1534);
             this.tabPageAdvDayOffs.TabIndex = 3;
             this.tabPageAdvDayOffs.Text = "Absences";
             this.tabPageAdvDayOffs.ThemesEnabled = false;
+            // 
+            // panelWaitForDayOff
+            // 
+            this.panelWaitForDayOff.BackgroundImage = global::Myrtille.Properties.Resources.WaitingLightDayOff;
+            this.panelWaitForDayOff.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panelWaitForDayOff.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelWaitForDayOff.Location = new System.Drawing.Point(0, 0);
+            this.panelWaitForDayOff.Name = "panelWaitForDayOff";
+            this.panelWaitForDayOff.Size = new System.Drawing.Size(2068, 1534);
+            this.panelWaitForDayOff.TabIndex = 1;
             // 
             // sfDataGridAbsences
             // 
@@ -359,66 +467,54 @@
             this.sfDataGridAbsences.Location = new System.Drawing.Point(0, 0);
             this.sfDataGridAbsences.Name = "sfDataGridAbsences";
             this.sfDataGridAbsences.PreviewRowHeight = 56;
-            this.sfDataGridAbsences.Size = new System.Drawing.Size(1944, 1086);
+            this.sfDataGridAbsences.Size = new System.Drawing.Size(2068, 1534);
             this.sfDataGridAbsences.TabIndex = 0;
             this.sfDataGridAbsences.Text = "sfDataGrid1";
             this.sfDataGridAbsences.AutoGeneratingColumn += new Syncfusion.WinForms.DataGrid.Events.AutoGeneratingColumnEventHandler(this.sfDataGridAbsences_autoGeneratingColumn);
             // 
-            // panelWaitForResults
+            // imageListTriColor
             // 
-            this.panelWaitForResults.BackgroundImage = global::Myrtille.Properties.Resources.WaitingLightwithText;
-            this.panelWaitForResults.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panelWaitForResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelWaitForResults.Location = new System.Drawing.Point(0, 0);
-            this.panelWaitForResults.Name = "panelWaitForResults";
-            this.panelWaitForResults.Size = new System.Drawing.Size(1944, 1086);
-            this.panelWaitForResults.TabIndex = 1;
+            this.imageListTriColor.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTriColor.ImageStream")));
+            this.imageListTriColor.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTriColor.Images.SetKeyName(0, "green3D.png");
+            this.imageListTriColor.Images.SetKeyName(1, "orange3d.png");
+            this.imageListTriColor.Images.SetKeyName(2, "red3d.png");
             // 
-            // panelWaitForPeople
+            // backgroundWorkerAllRows
             // 
-            this.panelWaitForPeople.BackgroundImage = global::Myrtille.Properties.Resources.WaitingLightPeople;
-            this.panelWaitForPeople.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panelWaitForPeople.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelWaitForPeople.Location = new System.Drawing.Point(0, 0);
-            this.panelWaitForPeople.Name = "panelWaitForPeople";
-            this.panelWaitForPeople.Size = new System.Drawing.Size(1944, 1086);
-            this.panelWaitForPeople.TabIndex = 1;
+            this.backgroundWorkerAllRows.WorkerReportsProgress = true;
+            this.backgroundWorkerAllRows.DoWork += new System.ComponentModel.DoWorkEventHandler(this.AllRowsProcess);
+            this.backgroundWorkerAllRows.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.onWorkerProgressChanged);
+            this.backgroundWorkerAllRows.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.onWorkerComplete);
             // 
-            // panelWaitForDayOff
+            // progressBarAdvAnalyse
             // 
-            this.panelWaitForDayOff.BackgroundImage = global::Myrtille.Properties.Resources.WaitingLightDayOff;
-            this.panelWaitForDayOff.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panelWaitForDayOff.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelWaitForDayOff.Location = new System.Drawing.Point(0, 0);
-            this.panelWaitForDayOff.Name = "panelWaitForDayOff";
-            this.panelWaitForDayOff.Size = new System.Drawing.Size(1944, 1086);
-            this.panelWaitForDayOff.TabIndex = 1;
-            // 
-            // toolStripBtnEffectif
-            // 
-            this.toolStripBtnEffectif.Image = global::Myrtille.Properties.Resources.loadpeople;
-            this.toolStripBtnEffectif.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnEffectif.Name = "toolStripBtnEffectif";
-            this.toolStripBtnEffectif.Size = new System.Drawing.Size(83, 137);
-            this.toolStripBtnEffectif.Text = "Effectif";
-            this.toolStripBtnEffectif.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripBtnEffectif.Click += new System.EventHandler(this.toolStripBtnEffectif_Click);
-            // 
-            // toolStripBtnAbsences
-            // 
-            this.toolStripBtnAbsences.Image = global::Myrtille.Properties.Resources.loaddays;
-            this.toolStripBtnAbsences.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnAbsences.Name = "toolStripBtnAbsences";
-            this.toolStripBtnAbsences.Size = new System.Drawing.Size(108, 137);
-            this.toolStripBtnAbsences.Text = "Absences";
-            this.toolStripBtnAbsences.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripBtnAbsences.Click += new System.EventHandler(this.toolStripBtnAbsences_ClickAsync);
+            this.progressBarAdvAnalyse.BackgroundStyle = Syncfusion.Windows.Forms.Tools.ProgressBarBackgroundStyles.Office2016Colorful;
+            this.progressBarAdvAnalyse.BackMultipleColors = new System.Drawing.Color[] {
+        System.Drawing.Color.Empty};
+            this.progressBarAdvAnalyse.BackSegments = false;
+            this.progressBarAdvAnalyse.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.progressBarAdvAnalyse.CustomText = null;
+            this.progressBarAdvAnalyse.CustomWaitingRender = false;
+            this.progressBarAdvAnalyse.ForegroundImage = null;
+            this.progressBarAdvAnalyse.Location = new System.Drawing.Point(14, 560);
+            this.progressBarAdvAnalyse.MultipleColors = new System.Drawing.Color[] {
+        System.Drawing.Color.Empty};
+            this.progressBarAdvAnalyse.Name = "progressBarAdvAnalyse";
+            this.progressBarAdvAnalyse.ProgressStyle = Syncfusion.Windows.Forms.Tools.ProgressBarStyles.Office2016Colorful;
+            this.progressBarAdvAnalyse.SegmentWidth = 12;
+            this.progressBarAdvAnalyse.Size = new System.Drawing.Size(392, 25);
+            this.progressBarAdvAnalyse.TabIndex = 7;
+            this.progressBarAdvAnalyse.Text = "progressBarAdv1";
+            this.progressBarAdvAnalyse.ThemeName = "Office2016Colorful";
+            this.progressBarAdvAnalyse.Value = 0;
+            this.progressBarAdvAnalyse.WaitingGradientWidth = 400;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2314, 1337);
+            this.ClientSize = new System.Drawing.Size(2454, 1785);
             this.Controls.Add(this.splitContainerAdv2);
             this.Controls.Add(this.ribbonControlAdv2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -434,11 +530,14 @@
             this.toolStripTabItemFichiers.Panel.PerformLayout();
             this.toolStripExFiles.ResumeLayout(false);
             this.toolStripExFiles.PerformLayout();
+            this.toolStripEx1.ResumeLayout(false);
+            this.toolStripEx1.PerformLayout();
             this.splitContainerAdv2.Panel1.ResumeLayout(false);
             this.splitContainerAdv2.Panel1.PerformLayout();
             this.splitContainerAdv2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerAdv2)).EndInit();
             this.splitContainerAdv2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.integerTBRecords)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboDropDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
@@ -448,6 +547,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.sfDataGridEffectif)).EndInit();
             this.tabPageAdvDayOffs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sfDataGridAbsences)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBarAdvAnalyse)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -483,6 +583,12 @@
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdvResults;
         private System.Windows.Forms.Panel panelWaitForResults;
         private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGridResult;
+        private System.Windows.Forms.ImageList imageListTriColor;
+        private Syncfusion.Windows.Forms.Tools.IntegerTextBox integerTBRecords;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerAllRows;
+        private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
+        private System.Windows.Forms.ToolStripButton toolStripBtnRefresh;
+        private Syncfusion.Windows.Forms.Tools.ProgressBarAdv progressBarAdvAnalyse;
     }
 }
 

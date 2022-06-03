@@ -12,6 +12,7 @@ using System.IO;
 using OfficeOpenXml;
 using System.Threading.Tasks;
 using Syncfusion.WinForms.Controls;
+using System.Windows.Forms.VisualStyles;
 
 namespace Myrtille
 {
@@ -28,7 +29,35 @@ namespace Myrtille
         public MainForm()
         {
             InitializeComponent();
+            this.Style.TitleBar.TextHorizontalAlignment = HorizontalAlignment.Left;
+            this.Style.TitleBar.TextVerticalAlignment = VerticalAlignment.Center;
 
+            //Sets the back color and fore color of the title bar.
+            this.Style.TitleBar.BackColor = Color.Black;
+            this.Style.TitleBar.ForeColor = Color.White;
+
+            //Sets the fore color of the title bar buttons
+            this.Style.TitleBar.CloseButtonForeColor = Color.White;
+            this.Style.TitleBar.MinimizeButtonForeColor = Color.White;
+            this.Style.TitleBar.MaximizeButtonForeColor = Color.White;
+
+            //Sets the hover state back color of the title bar buttons
+            this.Style.TitleBar.CloseButtonHoverBackColor = Color.DarkGray;
+            this.Style.TitleBar.MinimizeButtonHoverBackColor = Color.DarkGray;
+            this.Style.TitleBar.MaximizeButtonHoverBackColor = Color.DarkGray;
+
+            //Sets the pressed state back color of the title bar buttons
+            this.Style.TitleBar.CloseButtonPressedBackColor = Color.Gray;
+            this.Style.TitleBar.MaximizeButtonPressedBackColor = Color.Gray;
+            this.Style.TitleBar.MinimizeButtonPressedBackColor = Color.Gray;
+
+            //Sets the back color of the client area.
+ //           this.Style.BackColor = Color.CornflowerBlue;
+
+            sfDateTimeStart.Culture = new System.Globalization.CultureInfo("fr-FR");
+            sfDateTimeStop.Culture = new System.Globalization.CultureInfo("fr-FR");
+            sfDateTimeStart.MonthCalendar.ShowFooter = false;
+            sfDateTimeStop.MonthCalendar.ShowFooter = false;
         }
 
         private async void toolStripBtnEffectif_Click(object sender, EventArgs e)
@@ -40,7 +69,7 @@ namespace Myrtille
             {
                 filePath = openFileDialogEffectif.FileName;
                 //            }
-                Utils utils = new Utils();
+                UtilsAsync utils = new UtilsAsync();
                 sfDataGridEffectif.ShowBusyIndicator = true;
 
                 ExcelPackage ep = await utils.LoadExcelFromFile(filePath);
@@ -77,6 +106,8 @@ namespace Myrtille
                         }
                         people.Rows.Add(peopleRow);
                     }
+                    tabPageAdvPeople.ImageIndex=0;
+                    tabPageAdvResults.ImageIndex=1;
                 }
             
 
@@ -99,7 +130,7 @@ namespace Myrtille
                 if (AppDataSet.Tables.Count == 2)
                 {
                     DataTable dt = createResultats();
-                    dt = AnalyseRelation(dt);
+                    dt = AnalyseRelationAsync(dt);
                     dt = AnalyseDatesAbsences(dt);
                 }
             }
@@ -116,7 +147,7 @@ namespace Myrtille
             {
                 filePath = openFileDialogAbsences.FileName;
                 //           }
-                Utils utils = new Utils();
+                UtilsAsync utils = new UtilsAsync();
 
                 sfDataGridAbsences.ShowBusyIndicator = true;
 
@@ -157,10 +188,6 @@ namespace Myrtille
                 }
 
                 dayoffs.TableName = "Absences";
-
-                //                   dayoffs = absences.LoadExcelFromFile(filePath);
-
-
                 AppDataSet.Tables.Add(dayoffs);
 
                 AppDataSet.EnforceConstraints = false;
@@ -168,11 +195,13 @@ namespace Myrtille
                 sfDataGridAbsences.DataMember = "Absences";
 
                 panelWaitForDayOff.Visible = false;
+                tabPageAdvDayOffs.ImageIndex = 0;
+                tabPageAdvResults.ImageIndex = 1;
 
                 if (AppDataSet.Tables.Count == 2)
                 {
                     DataTable dt = createResultats();
-                    dt = AnalyseRelation(dt);
+                    dt = AnalyseRelationAsync(dt);
                 }
             }
         }
@@ -197,7 +226,8 @@ namespace Myrtille
                 col.DataType = resultColumnsTypes[i];
                 result.Columns.Add(col);
             }
-
+            tabPageAdvResults.ImageIndex = 0;
+            sfDateTimeStart.Enabled = true;
             return result;
         }
 
@@ -212,76 +242,138 @@ namespace Myrtille
 
             return result;
         }
-        private DataTable AnalyseRelation(DataTable result)
+
+        private bool checkDateInRange(AbsenceForPerson abs)
         {
+            DateTime absDebut = (DateTime)abs.Debut_Absence;
+            DateTime absFin = (DateTime)abs.Fin_Absence;
+            DateTime Start = (DateTime)sfDateTimeStart.Value;
+            DateTime Stop = (DateTime)sfDateTimeStop.Value;
+            bool hasDateError = false;
 
-                        AbsenceForPerson absenceForPerson = new AbsenceForPerson();
-
-            panelWaitForResults.Visible = false;
-            sfDataGridResult.ShowBusyIndicator = true;
-            DataRelation relation = AppDataSet.Relations[0];
-
-            AppDataSet.Tables.Add(result);
-            sfDataGridResult.DataSource = AppDataSet;
-            sfDataGridResult.DataMember = "Resultat";
-
-            sfDataGridResult.Columns[0].AllowGrouping = true;
-            sfDataGridResult.Columns[0].FilterRowEditorType = "Numeric";
-
-            foreach (DataRow persRow in AppDataSet.Tables["Effectif"].Rows)
+            if (absDebut.InRange(Start, Stop))
             {
-                if (persRow.GetChildRows(relation).Length > 0)
+                if (!absFin.InRange(Start, Stop))
+                    hasDateError = true;
+            }
+            else
+                hasDateError = true;
+
+            return hasDateError;
+        }
+
+        private bool checkDateInRange(string debut, string fin, DateTime start, DateTime stop)
+        {
+            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR");
+            System.Globalization.DateTimeStyles styles = System.Globalization.DateTimeStyles.None;
+            DateTime absdebut = DateTime.Now;
+            DateTime absfin = DateTime.Now;
+            if (debut != "")
+            {
+                absdebut = DateTime.Parse(debut, culture, styles);
+            }
+            if (fin != "")
+            {
+                absfin = DateTime.Parse(fin, culture, styles);
+            }
+
+            bool hasDateError = false;
+            DateTime absDebut;
+            if (absdebut.InRange(start, stop))
+            {
+                if (!absfin.InRange(start, stop))
+                    hasDateError = true;
+            }
+            else
+                hasDateError = true;
+
+            return hasDateError;
+        }
+
+        private DataRow rowProcess(DataRow persRow)
+        {
+            DataRelation relation = AppDataSet.Relations[0];
+            AbsenceForPerson absenceForPerson = new AbsenceForPerson();
+            DataTable result = AppDataSet.Tables[2];
+
+            DataRow row = result.NewRow();
+            row[1] = "OK";
+
+            if (persRow.GetChildRows(relation).Length > 0)
                 {
                     foreach (DataRow absRow in persRow.GetChildRows(relation))
                     {
-//                        DataRow row = result.NewRow();
-                        //AbsenceForPerson abs = absenceForPerson.createAbsenceForPerson(persRow.GetChildRows(relation).Length, absRow);
-                        //DateTime absDebut = (DateTime)abs.Debut_Absence;
-                        //DateTime absFin = (DateTime)abs.Fin_Absence;
-                        //DateTime Start = (DateTime)sfDateTimeStart.Value;
-                        //DateTime Stop = (DateTime)sfDateTimeStop.Value;
-                        //if (DateTime.Compare(absDebut, Start) >0  & 
-                        //        (DateTime.Compare(absDebut, Stop) <0) {
+                        AbsenceForPerson abs = absenceForPerson.createAbsenceForPerson(persRow.GetChildRows(relation).Length, absRow);
 
-                        //}
+                        if (checkDateInRange(abs))
+                        {
 
-                    //    row[0] = abs.NbMatches;
-                    //    row[2] = abs.TGI;
-                    //    row[3] = abs.LastName;
-                    //    row[4] = abs.FirstName;
-                    //    row[5] = abs.Motif;
-                    //    row[6] = abs.Debut_Absence;
-                    //    row[7] = abs.Fin_Absence;
-                    //    result.Rows.Add(row);
+                            row[0] = abs.NbMatches;
+                            row[1] = "DATES NON VALIDES";
+                            row[2] = abs.TGI;
+                            row[3] = abs.LastName;
+                            row[4] = abs.FirstName;
+                            row[5] = abs.Motif;
+                            row[6] = abs.Debut_Absence;
+                            row[7] = abs.Fin_Absence;
+
+                        }
                     }
                 }
                 else
                 {
-                    DataRow row = result.NewRow();
+
                     row[0] = 0;
                     row[1] = "PAS D'ABSENCE";
                     row[2] = persRow[0];
                     row[3] = persRow[1];
                     row[4] = persRow[2];
-                    result.Rows.Add(row);
+
                 }
+//            result.Rows.Remove(row);
+            return (row);
+        }
+        private void AllRowsProcess()
+        {
+
+            DataTable result = AppDataSet.Tables[2];
+            result.Clear();
+
+            foreach (DataRow persRow in AppDataSet.Tables["Effectif"].Rows)
+            {
+                DataRow row = result.NewRow();
+                row = rowProcess(persRow);
+                if (row[1].ToString() != "OK") result.Rows.Add(row);
             }
-//            result.AcceptChanges();
+            integerTBRecords.Text = result.Rows.Count.ToString();
+        }
+        private DataTable AnalyseRelationAsync(DataTable result)
+        {
+            panelWaitForResults.Visible = false;
+
+            sfDataGridResult.ShowBusyIndicator = true;
+
+            AppDataSet.Tables.Add(result);
+            sfDataGridResult.DataSource = AppDataSet;
+            sfDataGridResult.DataMember = "Resultat";
+            sfDataGridResult.AllowGrouping = true;
+            sfDataGridResult.AllowFiltering = true;
+            sfDataGridResult.Columns[0].AllowGrouping = true;
+            sfDataGridResult.Columns[0].FilterRowEditorType = "Numeric";
+
+            AllRowsProcess();
+
             sfDataGridResult.ShowBusyIndicator = false;
-
-
-
-
-
+            sfDataGridResult.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.AllCells;
 
             return result;
         }
 
 
-        private void onBtnRefreshClicked(object sender, EventArgs e)
-        {
- //           AnalyseRelation();
-        }
+ //       private void onBtnRefreshClicked(object sender, EventArgs e)
+ //       {
+ ////           AnalyseRelation();
+ //       }
 
         private void sfDataGridEffectif_AutoGeneratingColumn(object sender, Syncfusion.WinForms.DataGrid.Events.AutoGeneratingColumnArgs e)
         {
@@ -301,24 +393,65 @@ namespace Myrtille
             e.Column.HeaderStyle.TextColor = Color.Snow;
         }
 
-        private void onStartDateChanged(object sender, Syncfusion.WinForms.Input.Events.DateTimeValueChangedEventArgs e)
+        private void onStartDateChangedAsync(object sender, Syncfusion.WinForms.Input.Events.DateTimeValueChangedEventArgs e)
         {
-
+            tabPageAdvResults.ImageIndex = 1;
+            if (!backgroundWorkerAllRows.IsBusy)
+                backgroundWorkerAllRows.RunWorkerAsync();
+            sfDateTimeStop.MinDateTime = (DateTime)sfDateTimeStart.Value;
+            sfDateTimeStop.Enabled = true;
         }
 
-        private void onStopDateChanged(object sender, Syncfusion.WinForms.Input.Events.DateTimeValueChangedEventArgs e)
+            private void AllRowsProcess(object sender, DoWorkEventArgs e)
         {
+            DataTable result = AppDataSet.Tables[2];
+            int nb = 0;
+            int allRowsCount = AppDataSet.Tables["Effectif"].Rows.Count;
 
+            result.Clear();
+            sfDataGridResult.Invoke(new Action(() => sfDataGridResult.ShowBusyIndicator = true));
+
+            foreach (DataRow persRow in AppDataSet.Tables["Effectif"].Rows)
+            {
+                DataRow row = result.NewRow();
+                nb += 100;
+                row = rowProcess(persRow);
+                if (row[1].ToString() != "OK") result.Rows.Add(row);
+                //                backgroundWorkerAllRows.ReportProgress(result.Rows.Count);
+                backgroundWorkerAllRows.ReportProgress(nb/allRowsCount);
+
+            }
+            sfDataGridResult.Invoke(new Action(() => sfDataGridResult.ShowBusyIndicator = false));
+        }
+        private void onStopDateChangedAsync(object sender, Syncfusion.WinForms.Input.Events.DateTimeValueChangedEventArgs e)
+        {
+            sfDataGridResult.ShowBusyIndicator = true;
+            tabPageAdvResults.ImageIndex = 1;
+            if (!backgroundWorkerAllRows.IsBusy)
+                backgroundWorkerAllRows.RunWorkerAsync();
         }
 
-        //private void sfDataGridResult_RowValidating(object sender, Syncfusion.WinForms.DataGrid.Events.RowValidatingEventArgs e)
-        //{
-        //    var data = e.DataRow.RowData as AbsenceForPerson;
-        //    if (data.NbMatches == 0)
-        //    {
-        //        e.IsValid = false;
-        //        e.ErrorMessage = "Cette personne n'a pas d'absence enregistrée";
-        //    }
-        //}
+        private void onWorkerComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+//            sfDataGridResult.ShowBusyIndicator = false;
+            tabPageAdvResults.ImageIndex = 0;
+            sfDataGridResult.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.AllCells;
+        }
+
+        private void toolStripBtnRefresh_Click(object sender, EventArgs e)
+        {
+            //tabPageAdvResults.ImageIndex = 1;
+            //if (!backgroundWorkerAllRows.IsBusy)
+            //    backgroundWorkerAllRows.RunWorkerAsync();
+        }
+
+        private void onWorkerProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            //sfDataGridResult.Invoke(new Action(() => sfDataGridResult.ShowBusyIndicator = true));
+            progressBarAdvAnalyse.Invoke(new Action(() => progressBarAdvAnalyse.Value = e.ProgressPercentage));
+            //progressBarAdvAnalyse.Value = e.ProgressPercentage;
+            tabPageAdvResults.ImageIndex = 1;
+        }
+
     }
 }
